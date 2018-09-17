@@ -8,7 +8,7 @@ var app = express();
 
 var PORT = process.env.PORT || 8080;
 
-// Express app using body-parser 
+// Express app body-parser 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 
   extended: true
@@ -23,7 +23,7 @@ require('./app/routing/apiRoutes.js')(app);
 //html routes
 require('./app/routing/htmlRoutes.js')(app);
 
-// initiates listending for the server 
+// initiates listening for the server 
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });

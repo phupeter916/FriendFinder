@@ -15,14 +15,14 @@ module.exports = function (app) {
     
         // parsing user input from data sent from survey.html
         var newUserData = req.body;
-        var newScores = newFriend.scores;
+        var newScores = newUserData.scores;
 
         // 4 loop through all the friends database. 
         for (var i = 0; i < friends.length; i++) {
             var scoreDifference = 0;
 
             // Another 4 loop through scores of each friend to calculate score difference
-            for (var k = 0; k < friends[i].scores[k]; h++) {
+            for (var k = 0; k < friends[i].scores[k]; k++) {
                 scoreDifference += Math.abs(parseInt(newScores[k]) - parseInt(friends[i].scores[k]));
 
                 
