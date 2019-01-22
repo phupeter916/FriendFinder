@@ -42,8 +42,8 @@
         </div>
 
         <div class="form-group row">
-            <label for="picture">Link to Photo Image</label>
-            <input type="url" class="form-control" placeholder="" id="picture">
+            <label for="photo">Link to Photo Image</label>
+            <input type="url" class="form-control" placeholder="" id="photo">
         </div>
         
         <hr/>
@@ -254,56 +254,39 @@
 <script>
 
     // Onclick Function to capture the user inputs
-    $("#submit").on("click", function(event) {
+    $("#submit").on("click", function (event) {
         event.preventDefault();
-
-    // Need to Validate the Form 
-    function formValidation() {
-        var formValid = true;
-        $(".form-control").each(function() {
-          if ($(this).val() === "") {
-            formValid = false;
-          }
-        });
-
-        $(".select-option").each(function() {
-            if ($(this).val() === "") {
-            formValid = false;
-          }
-        });
-        return formValid;
-      }
-    //Once valdiated we have to createa an object for new User data
-      if (formValidation()) {
-          var newUserData = {
-            name: $("#name").val(),
-            photo: $("#photo").val(),
-            scores: [
-            $("#question1").val(),
-            $("#question12").val(),
-            $("#question13").val(),
-            $("#question14").val(),
-            $("#question15").val(),
-            $("#question16").val(),
-            $("#question17").val(),
-            $("#question18").val(),
-            $("#question19").val(),
-            $("#question110").val()
-          ]
-          };
-
-    // Need to Post data to friends API
-        var currentURL = window.location.origin;
-            $.post("/api/friends", newUserData, function (data) {
+        // check that input is valid
+        for (var i = 1; i < 11; i++) {
+            if ($.trim($("#question" + [i]).val()) === "" || $("#question" + [i]).val().trim() === "Select an Option") {
+                alert("Please fill out all fields before submitting!");
+                return false;
+            };
+        };
+        if ($.trim($("#name").val()) === "" || $.trim($("#name").val()) === "name") {
+            alert("Please fill out all fields before submitting!");
+            $("#name").val("Enter a valid name");
+            return false;
+        } else if ($.trim($("#photo").val()) === "" || $.trim($("#url").val()) === "photo") {
+            $("#photo").val("Enter a valid url address");
+            alert("Please fill out all fields before submitting!");
+            return false;
+        } else {
+            var newFriend = {
+                name: $("#name").val().trim(),
+                photo: $("#photo").val().trim(),
+                scores: [$("#question1").val(), $("#question2").val(), $("#question3").val(), $("#question4").val(), $("#question5").val(), $("#question6").val(), $("#question7").val(), $("#question8").val(), $("#question9").val(), $("#question10").val()]
+            };
+            
+            var currentURL = window.location.origin;
+            $.post("/api/friends", newFriend, function (data) {
                 $("#matchName").text(data.name);
                 $("#matchPicture").attr("src", data.photo);
-
-                // Show best match on pop up modal
+                // Show the modal with the best match 
                 $("#resultsModal").modal("toggle");
             });
         };
     });
-
 
 
 
